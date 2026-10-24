@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.aws-sam/
+build/
+samples/output/
+samples/*.jpg
+samples/*.jpeg
+samples/*.png
+*.msi
+*.csv
+.env
+*.pem
