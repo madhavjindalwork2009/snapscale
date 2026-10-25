@@ -270,6 +270,171 @@ Resources:
             Condition:
               StringEquals:
                 AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CdnDistribution}"
+                
+  OriginalBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref OriginalBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !GetAtt OriginalBucket.Arn
+              - !Sub "${OriginalBucket.Arn}/*"
+            Condition:
+              Bool:
+                aws:SecureTransport: "false"
+
+  AlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub "${AppName}-alerts"
+
+  ImagesProcessedFilter:
+    Type: AWS::Logs::MetricFilter
+    DependsOn: ProcessorFunction
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AppName}-processor"
+      FilterPattern: '"image_processed"'
+      MetricTransformations:
+        - MetricNamespace: SnapScale
+          MetricName: ImagesProcessed
+          MetricValue: "1"
+          DefaultValue: 0
+
+  ImagesRejectedFilter:
+    Type: AWS::Logs::MetricFilter
+    DependsOn: ProcessorFunction
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AppName}-processor"
+      FilterPattern: '"Rejected"'
+      MetricTransformations:
+        - MetricNamespace: SnapScale
+          MetricName: ImagesRejected
+          MetricValue: "1"
+          DefaultValue: 0
+
+  ProcessingFailuresFilter:
+    Type: AWS::Logs::MetricFilter
+    DependsOn: ProcessorFunction
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AppName}-processor"
+      FilterPattern: '"Message failed"'
+      MetricTransformations:
+        - MetricNamespace: SnapScale
+          MetricName: ProcessingFailures
+          MetricValue: "1"
+          DefaultValue: 0
+
+  DlqNotEmptyAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AppName}-dlq-not-empty"
+      AlarmDescription: A job failed 3 times and landed in the dead-letter queue
+      Namespace: AWS/SQS
+      MetricName: ApproximateNumberOfMessagesVisible
+      Dimensions:
+        - Name: QueueName
+          Value: !GetAtt DeadLetterQueue.QueueName
+      Statistic: Maximum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertTopic
+
+  ProcessingFailuresAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AppName}-processing-failures"
+      AlarmDescription: The processor raised an error while handling a job
+      Namespace: SnapScale
+      MetricName: ProcessingFailures
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertTopic
+
+  ProcessorErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AppName}-processor-lambda-errors"
+      AlarmDescription: The processor Lambda crashed or timed out
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref ProcessorFunction
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertTopic
+
+  ApiErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AppName}-api-lambda-errors"
+      AlarmDescription: The API Lambda crashed or timed out
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref ApiFunction
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertTopic
+
+  QueueBacklogAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AppName}-queue-backlog"
+      AlarmDescription: A job has waited in the queue for over 10 minutes
+      Namespace: AWS/SQS
+      MetricName: ApproximateAgeOfOldestMessage
+      Dimensions:
+        - Name: QueueName
+          Value: !GetAtt ProcessingQueue.QueueName
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 600
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+        - !Ref AlertTopic
+
+  OverviewDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: !Sub "${AppName}-overview"
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+            {"type":"metric","x":0,"y":0,"width":12,"height":6,"properties":{"title":"Images processed / rejected / failed","region":"${AWS::Region}","stat":"Sum","period":300,"metrics":[["SnapScale","ImagesProcessed"],["SnapScale","ImagesRejected"],["SnapScale","ProcessingFailures"]]}},
+            {"type":"metric","x":12,"y":0,"width":12,"height":6,"properties":{"title":"Processor duration (ms)","region":"${AWS::Region}","stat":"Average","period":300,"metrics":[["AWS/Lambda","Duration","FunctionName","${ProcessorFunction}"]]}},
+            {"type":"metric","x":0,"y":6,"width":12,"height":6,"properties":{"title":"Queue depth (main and dead-letter)","region":"${AWS::Region}","stat":"Maximum","period":60,"metrics":[["AWS/SQS","ApproximateNumberOfMessagesVisible","QueueName","${ProcessingQueue.QueueName}"],["AWS/SQS","ApproximateNumberOfMessagesVisible","QueueName","${DeadLetterQueue.QueueName}"]]}},
+            {"type":"metric","x":12,"y":6,"width":12,"height":6,"properties":{"title":"Lambda errors","region":"${AWS::Region}","stat":"Sum","period":300,"metrics":[["AWS/Lambda","Errors","FunctionName","${ProcessorFunction}"],["AWS/Lambda","Errors","FunctionName","${ApiFunction}"]]}}
+          ]
+        }
 
 Outputs:
   OriginalBucketName:
@@ -290,3 +455,7 @@ Outputs:
     Value: !Ref ApiFunction
   CdnDomain:
     Value: !GetAtt CdnDistribution.DomainName
+  AlertTopicArn:
+    Value: !Ref AlertTopic
+  DashboardName:
+    Value: !Ref OverviewDashboard
