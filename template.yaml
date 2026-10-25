@@ -34,7 +34,7 @@ Resources:
               DaysAfterInitiation: 1
       CorsConfiguration:
         CorsRules:
-          - AllowedMethods: [PUT]
+          - AllowedMethods: [PUT, POST]
             AllowedOrigins: ["*"]
             AllowedHeaders: ["*"]
             MaxAge: 3000
@@ -149,6 +149,79 @@ Resources:
             FunctionResponseTypes:
               - ReportBatchItemFailures
 
+  SnapScaleApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Auth:
+        ApiKeyRequired: true
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          UsagePlanName: snapscale-usage-plan
+          Throttle:
+            RateLimit: 5
+            BurstLimit: 10
+          Quota:
+            Limit: 1000
+            Period: DAY
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${AppName}-api"
+      CodeUri: src/api/
+      Handler: app.handler
+      Runtime: python3.13
+      Architectures:
+        - x86_64
+      MemorySize: 256
+      Timeout: 10
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ImagesTable
+          ORIGINAL_BUCKET: !Ref OriginalBucket
+          PROCESSED_BUCKET: !Ref ProcessedBucket
+          MAX_UPLOAD_BYTES: "10485760"
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+                - dynamodb:GetItem
+                - dynamodb:Scan
+              Resource: !GetAtt ImagesTable.Arn
+            - Effect: Allow
+              Action: s3:PutObject
+              Resource: !Sub "${OriginalBucket.Arn}/uploads/*"
+            - Effect: Allow
+              Action: s3:GetObject
+              Resource: !Sub "${ProcessedBucket.Arn}/processed/*"
+      Events:
+        CreateUpload:
+          Type: Api
+          Properties:
+            RestApiId: !Ref SnapScaleApi
+            Path: /uploads
+            Method: post
+        ListImages:
+          Type: Api
+          Properties:
+            RestApiId: !Ref SnapScaleApi
+            Path: /images
+            Method: get
+        GetImage:
+          Type: Api
+          Properties:
+            RestApiId: !Ref SnapScaleApi
+            Path: /images/{imageId}
+            Method: get
+        GetVariants:
+          Type: Api
+          Properties:
+            RestApiId: !Ref SnapScaleApi
+            Path: /images/{imageId}/variants
+            Method: get
+
 Outputs:
   OriginalBucketName:
     Value: !Ref OriginalBucket
@@ -162,3 +235,7 @@ Outputs:
     Value: !Ref ImagesTable
   ProcessorFunctionName:
     Value: !Ref ProcessorFunction
+  ApiUrl:
+    Value: !Sub "https://${SnapScaleApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
+  ApiFunctionName:
+    Value: !Ref ApiFunction
