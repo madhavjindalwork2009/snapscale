@@ -1,0 +1,41 @@
+=== 1. Records by status ===
+  total records: 223
+  COMPLETED: 216
+  FAILED: 4
+  PENDING: 2
+  RETRYING: 1
+
+=== 2. Every record that is NOT COMPLETED ===
+  f3bb3730-50cd-4465-895b-073db7b8f59b | RETRYING | attempts=3 | big1.jpg | deliberate
+  test-bad | FAILED | attempts=1 | None | deliberate
+  2bcf59ab-9cd5-4f4a-95b0-dfeff9dffbef | FAILED | attempts=1 | toowide.png | deliberate
+  abb1e4a5-2feb-423f-9ac1-3a4f5d339752 | FAILED | attempts=1 | fake.txt | deliberate
+  93b0254c-960e-4792-9105-faa35e439f5c | FAILED | attempts=1 | corrupt.jpg | deliberate
+  434e338d-256a-4fec-903b-fd5aee77fe37 | PENDING | attempts=None | oversize.png | deliberate
+  3805e65d-31ac-4852-a007-df352c12c30f | PENDING | attempts=None | big1.python | NOT on deliberate list
+
+=== 3. Processing success rate ===
+  Option A (strict): 216 / 221 = 97.74%  (all records that got a file)
+  Option B (headline): 216 / 216 = 100.00%  (valid images only)
+
+=== 4. Byte reduction (COMPLETED records only) ===
+  All completed (burst.jpg dominates: ~200 of the records)
+    JPEG  large      n=215 total-bytes reduction= 32.9% avg per image= 10.0%
+    JPEG  medium     n=215 total-bytes reduction= 39.9% avg per image= 11.0%
+    JPEG  thumbnail  n=215 total-bytes reduction= 96.4% avg per image= 94.7%
+    PNG   large      n=  1 total-bytes reduction=  2.0% avg per image=  2.0%
+    PNG   medium     n=  1 total-bytes reduction= 63.5% avg per image= 63.5%
+    PNG   thumbnail  n=  1 total-bytes reduction= 98.0% avg per image= 98.0%
+  Without burst records
+    JPEG  large      n= 12 total-bytes reduction= 73.5% avg per image= 73.5%
+    JPEG  medium     n= 12 total-bytes reduction= 91.3% avg per image= 91.3%
+    JPEG  thumbnail  n= 12 total-bytes reduction= 99.5% avg per image= 99.5%
+    PNG   large      n=  1 total-bytes reduction=  2.0% avg per image=  2.0%
+    PNG   medium     n=  1 total-bytes reduction= 63.5% avg per image= 63.5%
+    PNG   thumbnail  n=  1 total-bytes reduction= 98.0% avg per image= 98.0%
+
+=== 5. Latency: completedAt - uploadedAt (server side) ===
+  All completed: n=216 avg=1.11s median=1.01s p95=1.91s min=0.52s max=8.37s
+  Burst records: n=203 avg=1.00s median=0.99s p95=1.36s min=0.52s max=1.97s
+  Non-burst records: n=13 avg=2.74s median=2.72s p95=8.37s min=1.18s max=8.37s
+  processingMs: avg=228 max=7785
