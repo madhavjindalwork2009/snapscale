@@ -1,0 +1,6 @@
+imageId: 2bcf59ab-9cd5-4f4a-95b0-dfeff9dffbef
+S3 upload status: 204
+Final status: FAILED (end-to-end 5.02 s)
+  client timing: create request 1.07 s, S3 upload 0.87 s, 3 polls, slowest poll 0.73 s
+  server latency (completedAt - uploadedAt): 2.12 s
+{'imageId': '2bcf59ab-9cd5-4f4a-95b0-dfeff9dffbef', 'status': 'FAILED', 'contentType': 'image/png', 'originalFilename': 'toowide.png', 'createdAt': '2026-10-26T07:24:15.272987+00:00', 'uploadedAt': '2026-10-26T07:24:16.231Z', 'completedAt': '2026-10-26T07:24:18.353848+00:00', 'errorMessage': 'Image dimensions are too large'}

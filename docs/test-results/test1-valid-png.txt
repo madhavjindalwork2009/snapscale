@@ -1,0 +1,7 @@
+imageId: 33908685-aa2d-41cf-9801-58fa66b9a1a0
+S3 upload status: 204
+Final status: COMPLETED (end-to-end 24.97 s)
+{'imageId': '33908685-aa2d-41cf-9801-58fa66b9a1a0', 'status': 'COMPLETED', 'contentType': 'image/png', 'originalFilename': 'test1.png', 'imageFormat': 'PNG', 'createdAt': '2026-10-26T05:23:34.059824+00:00', 'uploadedAt': '2026-10-26T05:23:36.267Z', 'completedAt': '2026-10-26T05:23:44.640939+00:00', 'processingMs': 7785, 'originalWidth': 1600, 'originalHeight': 1000, 'originalSizeBytes': 969971, 'variants': {'large': {'width': 1600, 'height': 1000, 'sizeBytes': 950387, 'contentType': 'image/png'}, 'medium': {'width': 800, 'height': 500, 'sizeBytes': 353678, 'contentType': 'image/png'}, 'thumbnail': {'width': 150, 'height': 94, 'sizeBytes': 19309, 'contentType': 'image/png'}}}
+  large: 1600x1000, 950387 bytes
+  medium: 800x500, 353678 bytes
+  thumbnail: 150x94, 19309 bytes

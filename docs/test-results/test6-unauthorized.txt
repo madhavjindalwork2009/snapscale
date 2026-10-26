@@ -1,0 +1,5 @@
+no key: 403
+wrong key: 403
+direct S3 processed: 403
+direct S3 original: 403
+CloudFront processed: 200

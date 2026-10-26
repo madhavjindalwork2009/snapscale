@@ -1,0 +1,4 @@
+imageId: abb1e4a5-2feb-423f-9ac1-3a4f5d339752
+S3 upload status: 204
+Final status: FAILED (end-to-end 3.40 s)
+{'imageId': 'abb1e4a5-2feb-423f-9ac1-3a4f5d339752', 'status': 'FAILED', 'contentType': 'image/jpeg', 'originalFilename': 'fake.txt', 'createdAt': '2026-10-26T05:33:41.529845+00:00', 'uploadedAt': '2026-10-26T05:33:42.342Z', 'completedAt': '2026-10-26T05:33:43.101204+00:00', 'errorMessage': 'File is not a valid image'}

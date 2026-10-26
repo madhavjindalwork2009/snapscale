@@ -1,0 +1,7 @@
+imageId: cbbe842b-cd5e-4467-8e64-dd09a0d8547e
+S3 upload status: 204
+Final status: COMPLETED (end-to-end 22.51 s)
+{'imageId': 'cbbe842b-cd5e-4467-8e64-dd09a0d8547e', 'status': 'COMPLETED', 'contentType': 'image/jpeg', 'originalFilename': 'big1.jpg', 'imageFormat': 'JPEG', 'createdAt': '2026-10-26T05:21:50.753411+00:00', 'uploadedAt': '2026-10-26T05:21:52.281Z', 'completedAt': '2026-10-26T05:21:55.383695+00:00', 'processingMs': 920, 'originalWidth': 3200, 'originalHeight': 2000, 'originalSizeBytes': 457074, 'variants': {'large': {'width': 1600, 'height': 1000, 'sizeBytes': 120922, 'contentType': 'image/jpeg'}, 'medium': {'width': 800, 'height': 500, 'sizeBytes': 39879, 'contentType': 'image/jpeg'}, 'thumbnail': {'width': 150, 'height': 94, 'sizeBytes': 2293, 'contentType': 'image/jpeg'}}}
+  large: 1600x1000, 120922 bytes
+  medium: 800x500, 39879 bytes
+  thumbnail: 150x94, 2293 bytes

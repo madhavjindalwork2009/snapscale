@@ -1,0 +1,41 @@
+{
+  "attempts": "1",
+  "completedAt": "2026-10-26T05:39:54.139516+00:00",
+  "contentType": "image/jpeg",
+  "createdAt": "2026-10-26T05:39:48.402151+00:00",
+  "imageFormat": "JPEG",
+  "imageId": "78760936-eab7-4ff9-97a0-1b55527806d1",
+  "originalBucket": "snapscale-originals-ACCOUNT_ID-ap-south-1",
+  "originalFilename": "big1.jpg",
+  "originalHeight": "2000",
+  "originalKey": "uploads/78760936-eab7-4ff9-97a0-1b55527806d1",
+  "originalSizeBytes": "457074",
+  "originalWidth": "3200",
+  "processingMs": "906",
+  "startedAt": "1792993193",
+  "status": "COMPLETED",
+  "uploadedAt": "2026-10-26T05:39:51.374Z",
+  "variants": {
+    "large": {
+      "contentType": "image/jpeg",
+      "height": "1000",
+      "key": "processed/78760936-eab7-4ff9-97a0-1b55527806d1/large.jpg",
+      "sizeBytes": "120922",
+      "width": "1600"
+    },
+    "medium": {
+      "contentType": "image/jpeg",
+      "height": "500",
+      "key": "processed/78760936-eab7-4ff9-97a0-1b55527806d1/medium.jpg",
+      "sizeBytes": "39879",
+      "width": "800"
+    },
+    "thumbnail": {
+      "contentType": "image/jpeg",
+      "height": "94",
+      "key": "processed/78760936-eab7-4ff9-97a0-1b55527806d1/thumbnail.jpg",
+      "sizeBytes": "2293",
+      "width": "150"
+    }
+  }
+}

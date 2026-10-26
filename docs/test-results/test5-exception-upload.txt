@@ -1,0 +1,5 @@
+imageId: f3bb3730-50cd-4465-895b-073db7b8f59b
+S3 upload status: 204
+Final status: RETRYING (end-to-end 92.03 s)
+  client timing: create request 2.41 s, S3 upload 3.12 s, 41 polls, slowest poll 4.54 s
+{'imageId': 'f3bb3730-50cd-4465-895b-073db7b8f59b', 'status': 'RETRYING', 'contentType': 'image/jpeg', 'originalFilename': 'big1.jpg', 'createdAt': '2026-10-26T07:52:21.969487+00:00', 'uploadedAt': '2026-10-26T07:52:25.199Z', 'errorMessage': 'An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws:sts::ACCOUNT_ID:assumed-role/snapscale-ProcessorFunctionRole-Qbjw6R1KFA9M/snapscale-processor is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::snapscale-processed-ACCOUNT_ID-ap-south-1/processed/f3bb3730-50cd-4465-895b-073db7b8f59b/thumbnail.jpg" with an explicit deny in an identity-based policy'}

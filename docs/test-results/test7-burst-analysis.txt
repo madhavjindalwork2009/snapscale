@@ -1,0 +1,27 @@
+
+== run2 (official, 100 ids saved): 100 records
+  statuses: {'COMPLETED': 100}
+  max attempts: 1
+  first createdAt:  2026-10-26T14:05:08.397194+00:00
+  last completedAt: 2026-10-26T14:05:54.976842+00:00
+  wall-clock first create -> last completion: 46.6 s
+  latency completedAt-uploadedAt: avg 0.99 s, min 0.54, max 1.40
+  processingMs: avg 153, max 214
+
+== run1 (accidental repeat): 100 records
+  statuses: {'COMPLETED': 100}
+  max attempts: 1
+  first createdAt:  2026-10-26T14:02:11.055753+00:00
+  last completedAt: 2026-10-26T14:03:00.089274+00:00
+  wall-clock first create -> last completion: 49.0 s
+  latency completedAt-uploadedAt: avg 0.99 s, min 0.52, max 1.86
+  processingMs: avg 157, max 347
+
+== other (3-upload check): 3 records
+  statuses: {'COMPLETED': 3}
+  max attempts: 1
+  first createdAt:  2026-10-26T13:58:02.259508+00:00
+  last completedAt: 2026-10-26T13:58:05.419862+00:00
+  wall-clock first create -> last completion: 3.2 s
+  latency completedAt-uploadedAt: avg 1.94 s, min 1.91, max 1.97
+  processingMs: avg 271, max 333

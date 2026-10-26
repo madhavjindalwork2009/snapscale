@@ -1,0 +1,78 @@
+2026-10-26T07:52:27.813000+00:00 2026/10/26/[$LATEST]0f412b455f5741eeac5edc67a6c660cc [ERROR]	2026-10-26T07:52:27.810Z	14d05b0c-919a-56cb-9ce0-385599737a5e	Message failed: 290d13c8-b023-4316-93e7-e0e21684ed05
+Traceback (most recent call last):
+  File "/var/task/app.py", line 31, in handler
+    handle_message(record["body"])
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/var/task/app.py", line 45, in handle_message
+    process_object(bucket, key, rec.get("eventTime"))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/task/app.py", line 136, in process_object
+    s3.put_object(
+    ~~~~~~~~~~~~~^
+        Bucket=PROCESSED_BUCKET,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        CacheControl="public, max-age=31536000, immutable",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/var/lang/lib/python3.13/site-packages/botocore/client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/lang/lib/python3.13/site-packages/botocore/context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "/var/lang/lib/python3.13/site-packages/botocore/client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.errorfactory.AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws:sts::ACCOUNT_ID:assumed-role/snapscale-ProcessorFunctionRole-Qbjw6R1KFA9M/snapscale-processor is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::snapscale-processed-ACCOUNT_ID-ap-south-1/processed/f3bb3730-50cd-4465-895b-073db7b8f59b/thumbnail.jpg" with an explicit deny in an identity-based policy
+2026-10-26T07:55:26.478000+00:00 2026/10/26/[$LATEST]0f412b455f5741eeac5edc67a6c660cc [ERROR]	2026-10-26T07:55:26.477Z	46a6939c-eb82-5825-aad3-f0c5e227c21f	Message failed: 290d13c8-b023-4316-93e7-e0e21684ed05
+Traceback (most recent call last):
+  File "/var/task/app.py", line 31, in handler
+    handle_message(record["body"])
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/var/task/app.py", line 45, in handle_message
+    process_object(bucket, key, rec.get("eventTime"))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/task/app.py", line 136, in process_object
+    s3.put_object(
+    ~~~~~~~~~~~~~^
+        Bucket=PROCESSED_BUCKET,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        CacheControl="public, max-age=31536000, immutable",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/var/lang/lib/python3.13/site-packages/botocore/client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/lang/lib/python3.13/site-packages/botocore/context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "/var/lang/lib/python3.13/site-packages/botocore/client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.errorfactory.AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws:sts::ACCOUNT_ID:assumed-role/snapscale-ProcessorFunctionRole-Qbjw6R1KFA9M/snapscale-processor is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::snapscale-processed-ACCOUNT_ID-ap-south-1/processed/f3bb3730-50cd-4465-895b-073db7b8f59b/thumbnail.jpg" with an explicit deny in an identity-based policy
+2026-10-26T07:58:26.482000+00:00 2026/10/26/[$LATEST]0f412b455f5741eeac5edc67a6c660cc [ERROR]	2026-10-26T07:58:26.481Z	22b94eee-27eb-5f67-b9dc-2db72db95388	Message failed: 290d13c8-b023-4316-93e7-e0e21684ed05
+Traceback (most recent call last):
+  File "/var/task/app.py", line 31, in handler
+    handle_message(record["body"])
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/var/task/app.py", line 45, in handle_message
+    process_object(bucket, key, rec.get("eventTime"))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/task/app.py", line 136, in process_object
+    s3.put_object(
+    ~~~~~~~~~~~~~^
+        Bucket=PROCESSED_BUCKET,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        CacheControl="public, max-age=31536000, immutable",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/var/lang/lib/python3.13/site-packages/botocore/client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/lang/lib/python3.13/site-packages/botocore/context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "/var/lang/lib/python3.13/site-packages/botocore/client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.errorfactory.AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws:sts::ACCOUNT_ID:assumed-role/snapscale-ProcessorFunctionRole-Qbjw6R1KFA9M/snapscale-processor is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::snapscale-processed-ACCOUNT_ID-ap-south-1/processed/f3bb3730-50cd-4465-895b-073db7b8f59b/thumbnail.jpg" with an explicit deny in an identity-based policy

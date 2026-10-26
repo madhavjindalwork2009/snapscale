@@ -1,0 +1,4 @@
+imageId: 434e338d-256a-4fec-903b-fd5aee77fe37
+S3 upload status: 400
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>EntityTooLarge</Code><Message>Your proposed upload exceeds the maximum allowed size</Message><ProposedSize>10489809</ProposedSize><MaxSizeAllowed>10485760</MaxSizeAllowed><RequestId>K3F3H8G7N9GZCMDN</RequestId><HostId>gnqLcKNU1RIxuywq2v7eYtcHL8gUO4kGQ1mXQnrTHNWNfGesDWQxYvKDF29vnhTDvDWTqay5UAs=</HostId></Error>

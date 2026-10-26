@@ -1,0 +1,4 @@
+imageId: 93b0254c-960e-4792-9105-faa35e439f5c
+S3 upload status: 204
+Final status: FAILED (end-to-end 18.52 s)
+{'imageId': '93b0254c-960e-4792-9105-faa35e439f5c', 'status': 'FAILED', 'contentType': 'image/jpeg', 'originalFilename': 'corrupt.jpg', 'createdAt': '2026-10-26T05:32:04.912827+00:00', 'uploadedAt': '2026-10-26T05:32:06.094Z', 'completedAt': '2026-10-26T05:32:08.743897+00:00', 'errorMessage': 'File is not a valid image'}

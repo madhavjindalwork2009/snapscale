@@ -1,0 +1,5 @@
+Burst start (UTC): 2026-10-26T14:05:05.723022+00:00
+Burst end   (UTC): 2026-10-26T14:05:52.655545+00:00
+Requested: 100, uploaded OK: 100, failed: 0
+Total time to send everything: 46.9 s
+Saved 100 image ids to docs/test-results/test7-burst-ids.txt
